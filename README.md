@@ -173,6 +173,6 @@ Usage: <class_name>.update(<\_id>, <dictionary>)
 
 <b>These individuals contributed to the hbnb project in this repository</b>
 
-Loraine Mukezwa Irakoze
-Jacques Twizeyimana
-Tashinga Mugwadi
+<div>Loraine Mukezwa Irakoze</div>
+<div>Jacques Twizeyimana</div>
+<div>Tashinga Mugwadi</div>
