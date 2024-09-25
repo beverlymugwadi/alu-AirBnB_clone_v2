@@ -173,6 +173,6 @@ Usage: <class_name>.update(<\_id>, <dictionary>)
 
 <b>These individuals contributed to the hbnb project in this repository</b>
 
-Loraine Mukezwa Irakoze l.irakoze2@alustudent.com
+Loraine Mukezwa Irakoze
 Jacques Twizeyimana
 Tashinga Mugwadi
