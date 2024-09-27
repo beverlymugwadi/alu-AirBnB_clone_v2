@@ -9,13 +9,16 @@ from models.place import Place
 from models.review import Review
 
 class FileStorage:
+
+
     __engine = None
     __session = None
 
     def __init__(self):
         self.__engine = create_engine('sqlite:///my_database.db')
         Base.metadata.create_all(self.__engine)
-        session_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
+        session_factory = sessionmaker(bind=self.__engine, 
+                                       expire_on_commit=False)
         Session = scoped_session(session_factory)
         self.__session = Session()
 
