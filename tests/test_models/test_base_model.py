@@ -8,7 +8,7 @@ import json
 import os
 
 
-class test_basemodel(unittest.TestCase):
+class TestBaseModel(unittest.TestCase):
     """ Test base model"""
 
     def __init__(self, *args, **kwargs):
@@ -77,4 +77,3 @@ class test_basemodel(unittest.TestCase):
         new = BaseModel(**n)
         self.assertAlmostEqual(new.created_at.timestamp(),
                                new.updated_at.timestamp(), delta=1)
-

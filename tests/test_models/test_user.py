@@ -1,12 +1,9 @@
 #!/usr/bin/python3
 """ """
-from tests.test_models.test_base_model import test_basemodel
+from tests.test_models.test_base_model import TestBaseModel
 from models.user import User
-import os
-import unittest
 
-@unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db', "skip if not db")
-class test_User(test_basemodel):
+class TestUser(TestBaseModel):
     """ Test for user"""
 
     def __init__(self, *args, **kwargs):
