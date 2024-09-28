@@ -2,8 +2,8 @@
 """ Module for testing file storage"""
 import unittest
 
-from models.base_model import BaseModel
 import models
+from models.base_model import BaseModel
 import os
 
 
