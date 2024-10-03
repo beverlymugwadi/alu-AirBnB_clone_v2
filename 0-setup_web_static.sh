@@ -1,14 +1,13 @@
 #!/usr/bin/env bash
-# Write a Bash script that sets up your web servers for the deployment of web_static
+# web static development
 
-apt-get update
-apt-get -y install nginx
-
-mkdir -p /data/web_static/releases/test/
-mkdir -p /data/web_static/shared/
-
-echo "<h1>Beverly Mugwadi</h1>" > /data/web_static/releases/test/index.html
-ln -sf /data/web_static/releases/test/ /data/web_static/current
-chown -R ubuntu:ubuntu /data/
-sudo sed -i '/listen 80 default_server/a location /hbnb_static { alias /data/web_static/current/;}' /etc/nginx/sites-enabled/default
+sudo apt-get -y update
+sudo apt-get -y upgrade
+sudo apt-get -y install nginx
+sudo mkdir -p /data/web_static/releases/test /data/web_static/shared
+echo "Hello, this is a test HTML file." | sudo tee /data/web_static/releases/test/index.html
+sudo rm -rf /data/web_static/current
+sudo ln -s /data/web_static/releases/test/ /data/web_static/current
+sudo chown -R ubuntu:ubuntu /data/
+sudo sed -i '44i \\n\tlocation /hbnb_static {\n\t\talias /data/web_static/current/;\n\t}' /etc/nginx/sites-available/default
 sudo service nginx restart
