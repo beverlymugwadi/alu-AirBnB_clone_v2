@@ -1,36 +1,38 @@
 #!/usr/bin/env bash
-# Setup web servers for the deployment of web_static
+# Web static deployment script
 
-# Install Nginx if not already installed
-if ! command -v nginx &> /dev/null; then
-    sudo apt-get -y update
-    sudo apt-get -y install nginx
-fi
+# Update and upgrade the system
+sudo apt-get -y update
+sudo apt-get -y upgrade
 
-# Create necessary directories
+# Install NGINX if not already installed
+sudo apt-get -y install nginx
+
+# Create directories for the web static deployment
 sudo mkdir -p /data/web_static/releases/test /data/web_static/shared
 
-# Create fake HTML file
-echo "<html>
-  <head>
-  </head>
-  <body>
-    Beverly is Awesome
-  </body>
-</html>" | sudo tee /data/web_static/releases/test/index.html
+# Create a test HTML file
+echo "Hello, this is a test HTML file." | sudo tee /data/web_static/releases/test/index.html
 
-# Create or recreate symbolic link
+# Remove any existing symbolic link and create a new one
 sudo rm -rf /data/web_static/current
 sudo ln -s /data/web_static/releases/test/ /data/web_static/current
 
-# Set ownership
+# Give ownership of the /data/ directory to the ubuntu user and group
 sudo chown -R ubuntu:ubuntu /data/
 
-# Update Nginx configuration
-config_string="\\n\\tlocation /hbnb_static/ {\n\t\talias /data/web_static/current/;\n\t}"
-sudo sed -i "/server_name _;/a $config_string" /etc/nginx/sites-available/default
+# Check if the location block already exists in the configuration file
+if ! sudo grep -q "location /hbnb_static" /etc/nginx/sites-available/default; then
+    # Add the location block if it doesn't exist
+    sudo sed -i '/listen 80 default_server;/a location /hbnb_static {\n\talias /data/web_static/current/;\n}' /etc/nginx/sites-available/default
+fi
 
-# Restart Nginx
-sudo service nginx restart
+# Test the NGINX configuration for syntax errors
+sudo nginx -t
 
-exit 0
+# If NGINX config test passes, restart NGINX
+if [ $? -eq 0 ]; then
+    sudo service nginx restart
+else
+    echo "Error: NGINX configuration test failed. Please fix the issues before restarting."
+fi
