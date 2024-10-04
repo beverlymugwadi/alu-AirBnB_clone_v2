@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 # Web static deployment script
 
+set -e  # Exit immediately if a command exits with a non-zero status
+
 # Update and upgrade the system
 apt-get -y update
 apt-get -y upgrade
@@ -35,4 +37,8 @@ if [ $? -eq 0 ]; then
     service nginx restart
 else
     echo "Error: NGINX configuration test failed. Please fix the issues before restarting."
+    exit 1  # Exit with an error status if the test fails
 fi
+
+# Exit successfully
+exit 0
