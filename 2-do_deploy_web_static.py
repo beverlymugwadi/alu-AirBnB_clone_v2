@@ -4,7 +4,7 @@
 
 from fabric.api import put, run, env
 from os.path import exists
-env.hosts = ['3.89.242.174', '34.227.193.7']
+env.hosts = ['52.207.249.183', '54.234.14.219']
 
 
 def do_deploy(archive_path):
@@ -26,28 +26,3 @@ def do_deploy(archive_path):
         return True
     except BaseException:
         return False
-
-    if not exists(archive_path):
-        return False
-
-    try:
-        put(archive_path, "/tmp/")
-        file_name = re.search(r'[^/]+$', archive_path).group(0)
-        deploy_path = join("/data/web_static/releases/",
-                           splitext(file_name)[0])
-        sudo("mkdir -p {}".format(deploy_path))
-
-        sudo("tar -xzf /tmp/{} -C {}".format(file_name, deploy_path))
-
-        with cd(deploy_path):
-            sudo("mv web_static/* .")
-            sudo("rm -rf web_static")
-
-        sudo("rm /tmp/{}".format(file_name))
-        sudo("rm -rf /data/web_static/current")
-
-        sudo('ln -sf {} /data/web_static/current'.format(deploy_path))
-    except Exception as err:
-        return False
-
-    return True
